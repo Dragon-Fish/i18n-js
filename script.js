@@ -27,10 +27,10 @@
   'use strict';
 
   window.dev = window.dev || {};
-  window.dev.i18n = window.dev.i18n || {};
+  window.dfgh.i18n = window.dfgh.i18n || {};
 
   // prevent double loading and loss of cache
-  if (window.dev.i18n.loadMessages !== undefined) {
+  if (window.dfgh.i18n.loadMessages !== undefined) {
     return;
   }
 
@@ -843,7 +843,7 @@
   }
 
   // expose under the dev global
-  window.dev.i18n = $.extend(window.dev.i18n, {
+  window.dfgh.i18n = $.extend(window.dfgh.i18n, {
     loadMessages: loadMessages,
 
     // 'hidden' functions to allow testing
@@ -857,11 +857,11 @@
   });
 
   // initialise overrides object
-  window.dev.i18n.overrides = window.dev.i18n.overrides || {};
-  overrides = window.dev.i18n.overrides;
+  window.dfgh.i18n.overrides = window.dfgh.i18n.overrides || {};
+  overrides = window.dfgh.i18n.overrides;
 
   // fire an event on load
-  mw.hook('dev.i18n').fire(window.dev.i18n);
+  mw.hook('dfgh.i18n').fire(window.dfgh.i18n);
   // alternatively, use $.getScript (or mw.loader)
   // and use the returned promise
 
