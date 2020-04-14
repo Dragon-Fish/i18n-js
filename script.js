@@ -26,7 +26,7 @@
 (function (window, $, mw, undefined) {
   'use strict';
 
-  window.dev = window.dev || {};
+  window.dfgh = window.dfgh || {};
   window.dfgh.i18n = window.dfgh.i18n || {};
 
   // prevent double loading and loss of cache
