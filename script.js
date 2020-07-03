@@ -343,6 +343,8 @@
       whitelistTags = [
         'i',
         'b',
+        'code',
+        'del',
         's',
         'br',
         'em',
