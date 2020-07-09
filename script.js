@@ -299,14 +299,16 @@
    *
    * @return The generated link.
    */
-  function makeLink(href, text, hasProtocol) {
+  function makeLink(href, text, hasProtocol, blank) {
     text = text || href;
     href = hasProtocol ? href : mw.util.getUrl(href);
 
     text = mw.html.escape(text);
     href = mw.html.escape(href);
 
-    return '<a href="' + href + '" title="' + text + '">' + text + '</a>';
+    blank = Boolean(blank) ? 'target="_blank"' : '';
+
+    return '<a href="' + href + '" title="' + text + '"' + blank + '>' + text + '</a>';
   }
 
   /*
@@ -341,13 +343,13 @@
         'class'
       ],
       whitelistTags = [
-        'i',
         'b',
+        'br',
         'code',
         'del',
-        's',
-        'br',
         'em',
+        'i',
+        's',
         'strong',
         'span',
       ];
@@ -414,7 +416,7 @@
     // [url text] -> [$1 $2]
     var urlRgx = /\[((?:https?:)?\/\/.+?) (.+?)\]/g,
       // http(s)://example.com
-      httpRgx = /\s*(https?:\/\/.+)\s*/g,
+      httpRgx = /(\s*)(https?:\/\/[^\s]+)(\s*)/g,
       // [[pagename]] -> [[$1]]
       simplePageRgx = /\[\[([^|]*?)\]\]/g,
       // [[pagename|text]] -> [[$1|$2]]
@@ -430,10 +432,10 @@
 
     return message
       .replace(urlRgx, function (_match, href, text) {
-        return makeLink(href, text, true);
+        return makeLink(href, text, true, true);
       })
-      .replace(httpRgx, function (_match, href) {
-        return makeLink(href, null, true);
+      .replace(httpRgx, function (_match, before, href, after) {
+        return before + makeLink(href, href, true, true) + after;
       })
       .replace(simplePageRgx, function (_match, href) {
         return makeLink(href);
