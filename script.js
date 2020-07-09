@@ -399,6 +399,7 @@
    * Parse some basic wikitext into HTML. Also supports basic inline HTML tags.
    *
    * Will process:
+   * - http/https
    * - [url text]
    * - [[pagename]]
    * - [[pagename|text]]
@@ -412,6 +413,8 @@
   function parse(message) {
     // [url text] -> [$1 $2]
     var urlRgx = /\[((?:https?:)?\/\/.+?) (.+?)\]/g,
+      // http(s)://example.com
+      httpRgx = /\s*(https?:\/\/.+)\s*/g,
       // [[pagename]] -> [[$1]]
       simplePageRgx = /\[\[([^|]*?)\]\]/g,
       // [[pagename|text]] -> [[$1|$2]]
@@ -428,6 +431,9 @@
     return message
       .replace(urlRgx, function (_match, href, text) {
         return makeLink(href, text, true);
+      })
+      .replace(httpRgx, function (_match, href) {
+        return makeLink(href, null, true);
       })
       .replace(simplePageRgx, function (_match, href) {
         return makeLink(href);
