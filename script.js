@@ -434,9 +434,9 @@
       .replace(urlRgx, function (_match, href, text) {
         return makeLink(href, text, true, true);
       })
-      .replace(httpRgx, function (_match, before, href, after) {
-        return before + makeLink(href, href, true, true) + after;
-      })
+      // .replace(httpRgx, function (_match, before, href, after) {
+      //   return before + makeLink(href, href, true, true) + after;
+      // })
       .replace(simplePageRgx, function (_match, href) {
         return makeLink(href);
       })
